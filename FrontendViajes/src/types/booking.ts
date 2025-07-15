@@ -37,3 +37,58 @@ export interface ServiceResponse {
   data?: unknown;
   error?: string;
 }
+
+export interface Reserva {
+  id: string;
+  tipo: string;
+  destino?: string;
+  hotel_nombre?: string;
+  estado: string;
+  fecha_creacion: string;
+  detalles: {
+    vuelo_id?: number;
+    hotel_id?: number;
+    pago?: {
+      id: number;
+      monto: number;
+      estado: string;
+    };
+  };
+}
+
+export interface ClienteReserva {
+  cliente: string;
+  reservas: Reserva[];
+  total_gastado: number;
+}
+
+export interface ReservasResponse {
+  success: boolean;
+  reservas: ClienteReserva[];
+  total_clientes: number;
+  total_reservas: number;
+  error?: string;
+}
+
+export interface TrackingStep {
+  paso: number;
+  titulo: string;
+  descripcion: string;
+  estado: 'completado' | 'en_proceso' | 'pendiente' | 'error';
+  timestamp: string | null;
+}
+
+export interface TrackingResponse {
+  success: boolean;
+  reserva_id: string;
+  tracking: TrackingStep[];
+  estado_actual: string;
+  progreso: number;
+}
+
+export interface BookingProcess {
+  currentStep: number;
+  totalSteps: number;
+  steps: TrackingStep[];
+  isProcessing: boolean;
+}
